@@ -1,27 +1,27 @@
-use argh::FromArgs;
+use clap::Parser;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::TcpStream;
 use tokio::time::{Duration, sleep};
 
-#[derive(FromArgs, Debug)]
 /// tcp-echo-benchmark
+#[derive(Parser, Debug)]
 struct Args {
     /// address
-    #[argh(option, short = 'a', default = "\"127.0.0.1:12345\".to_string()")]
+    #[arg(short = 'a', default_value_t = String::from("127.0.0.1:12345"))]
     address: String,
 
     /// length
-    #[argh(option, short = 'l', default = "512")]
+    #[arg(short = 'l', default_value_t = 512)]
     length: usize,
 
     /// number
-    #[argh(option, short = 'c', default = "50")]
+    #[arg(short = 'c', default_value_t = 50)]
     number: u32,
 
     /// duration
-    #[argh(option, short = 't', default = "60")]
+    #[arg(short = 't', default_value_t = 60)]
     duration: u64,
 }
 
@@ -37,7 +37,7 @@ async fn main() {
         length,
         number,
         duration,
-    } = argh::from_env();
+    } = Args::parse();
 
     let stop = Arc::new(AtomicBool::new(false));
     let mut handles = Vec::with_capacity(number as usize);

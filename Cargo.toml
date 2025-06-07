@@ -1,7 +1,7 @@
 [package]
 name = "tcp-echo-benchmark"
 description = "A high-performance TCP echo server benchmark tool measuring throughput using concurrent async clients. Supports configurable payload size, connection count, and test duration."
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 license = "GPL-3.0"
 repository = "https://github.com/gohryt/tcp-echo-benchmark"
@@ -11,8 +11,8 @@ name = "tcp-echo-benchmark"
 path = "src/main.rs"
 
 [dependencies]
-argh = "0.1.13"
-tokio = { version = "1.43.0", features = [
+clap = { version = "4.5.39", features = ["derive", "string"] }
+tokio = { version = "1.45", features = [
     "macros",
     "rt-multi-thread",
     "io-util",
